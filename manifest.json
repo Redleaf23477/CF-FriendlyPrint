@@ -1,0 +1,21 @@
+  {
+    "name": "CF Friendly Print",
+    "version": "0.1",
+    "description": "Let's print Codeforces problems and tutorials!",
+    "permissions": ["activeTab", "declarativeContent", "storage"],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
+    "options_page": "options.html",
+    "page_action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts" : [
+      {
+        "matches" : ["https://codeforces.com/*"],
+        "js" : ["contentScript.js"]
+      }
+    ],
+    "manifest_version": 2
+  }
