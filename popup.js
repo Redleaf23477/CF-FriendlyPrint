@@ -3,6 +3,7 @@ let errorLog = (msg) => { console.log(msg); };
 
 let button_print = document.getElementById('printButton');
 let p_whatPage = document.getElementById('whatPage');
+let l_probList = document.getElementById('probList');
 
 //////////////////////////////////////////////////////////////////////////////
 // Load values from chrome storage
@@ -24,6 +25,15 @@ function showWhatPage(whatPage) {
   p_whatPage.innerText = "This is a " + whatPage + " page!";
 }
 
+function showProbList(probLinks) {
+  probLinks.forEach((item) => {
+    let probName = item.text;
+    let li = document.createElement("li");
+    li.appendChild(document.createTextNode(probName))
+    l_probList.appendChild(li);
+  });
+}
+
 // show page properties
 window.onload = (function () {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -37,6 +47,9 @@ window.onload = (function () {
       } else {
         pageProp = JSON.parse(pageProp);
         showWhatPage(pageProp.whatPage);
+        if(pageProp.whatPage == "blog") {
+          showProbList(pageProp.probLinks);
+        }
       }
     });
   });
