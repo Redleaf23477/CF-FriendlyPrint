@@ -1,6 +1,5 @@
 
 let errorLog = (msg) => { console.log(msg); };
-let appMode = "modern";
 
 let button_print = document.getElementById('printButton');
 let p_whatPage = document.getElementById('whatPage');
@@ -17,6 +16,10 @@ chrome.storage.sync.get('color', function(data) {
   changeColor.setAttribute('value', data.color);
 });
 */
+
+let appSettings = {
+  mode: "modern"
+};
 
 //////////////////////////////////////////////////////////////////////////////
 // Layer Logics
@@ -57,7 +60,7 @@ function getPrintList() {
   return list;
 }
 
-if(appMode == "modern") {
+if(appSettings.mode == "modern") {
   // show page properties
   window.onload = (function () {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -92,7 +95,7 @@ button_print.onclick = function(element) {
       'printUnsupported.js'
     );
     // if modern mode, pass list of problems to be printed
-    if(isBlogPage == true && appMode == "modern") {
+    if(isBlogPage == true && appSettings.mode == "modern") {
       let param = { printList : getPrintList() };
       chrome.tabs.executeScript(
         tabs[0].id,
@@ -101,14 +104,7 @@ button_print.onclick = function(element) {
     }
     chrome.tabs.executeScript(
         tabs[0].id,
-        {file: fileToExec});
-    // modify to this (something like passing param)
-    /*
-    chrome.tabs.executeScript(tab.id, {
-      code: 'var config = 1;'
-    }, function() {
-        chrome.tabs.executeScript(tab.id, {file: 'content.js'});
-    });
-    */
+        {file: fileToExec}
+    );
   });
 };

@@ -1,11 +1,12 @@
-let appMode = "modern";   // "dummy" for snapshot only, "modern" for better UI but maybe buggy
+let appSettings = {
+    mode: "modern"      // "dummy" for snapshot only, "modern" for better UI but maybe buggy
+};
 let url = window.location.href;
 let pageProp = {
-    "whatPage" : undefined,
+    "whatPage" : undefined,     // whether it is problem, blog(probably tutorial), or something else
     "probLinks" : undefined
 };
 
-// whatPage : whether it is problem, blog(probably tutorial), or something else
 pageProp.whatPage = (
     url.search("/problem/") != -1? "problem" :
     url.search("/blog/") != -1? "blog" :
@@ -13,7 +14,7 @@ pageProp.whatPage = (
 );
 
 // if in modern mode, user can choose which problems to print
-if(appMode == "modern") {
+if(appSettings.mode == "modern") {
 
     // if it is a blog page, fetch list of problems
     if(pageProp.whatPage == "blog") {
@@ -32,7 +33,7 @@ if(appMode == "modern") {
         });
     }
 
-    // sending message to popup.js
+    // sending message to popup.js on request
     chrome.runtime.onMessage.addListener(
         function(message, sender, sendResponse) {
             switch(message.type) {
