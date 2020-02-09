@@ -16,7 +16,9 @@ function printTutorial()
 
     // print
     window.print();
-    location.reload();
+    // location.reload();
     return true;
 }
+// printSettings : declared by popup.js
+console.log(printSettings);
 printTutorial();

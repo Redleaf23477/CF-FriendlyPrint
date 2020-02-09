@@ -1,5 +1,6 @@
 
 let errorLog = (msg) => { console.log(msg); };
+let appMode = "modern";
 
 let button_print = document.getElementById('printButton');
 let p_whatPage = document.getElementById('whatPage');
@@ -25,35 +26,59 @@ function showWhatPage(whatPage) {
   p_whatPage.innerText = "This is a " + whatPage + " page!";
 }
 
-function showProbList(probLinks) {
-  probLinks.forEach((item) => {
-    let probName = item.text;
-    let li = document.createElement("li");
-    li.appendChild(document.createTextNode(probName))
-    l_probList.appendChild(li);
+function showProbList(probDict) {
+  Object.keys(probDict).forEach((key, index) => {
+    let probName = probDict[key];
+    let href = key;
+    let cb = document.createElement("input");
+    cb.setAttribute("type", "checkbox");
+    cb.setAttribute("value", href);
+    cb.setAttribute("name", probName);
+    let txt = document.createElement("label");
+    txt.setAttribute("for", probName);
+    txt.innerText = probName;
+    l_probList.appendChild(cb);
+    l_probList.appendChild(txt);
+    l_probList.appendChild(document.createElement("br"));
   });
 }
 
-// show page properties
-window.onload = (function () {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, {type: "getPageProp"}, function(pageProp) {
-      if(typeof pageProp == "undefined") {
-        errorLog("returned undefined");
-        if(chrome.runtime.lastError) {
-          // We couldn't talk to the content script, probably it's not there
-          errorLog("unexpected error");
+function getPrintList() {
+  let list = [];
+  let cb = l_probList.querySelectorAll("input");
+  cb.forEach((item) => {
+    if(item.checked) {
+      list.push({
+        href: item.value,
+        name: item.name
+      });
+    }
+  });
+  return list;
+}
+
+if(appMode == "modern") {
+  // show page properties
+  window.onload = (function () {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {type: "getPageProp"}, function(pageProp) {
+        if(typeof pageProp == "undefined") {
+          errorLog("returned undefined");
+          if(chrome.runtime.lastError) {
+            // We couldn't talk to the content script, probably it's not there
+            errorLog("unexpected error");
+          }
+        } else {
+          pageProp = JSON.parse(pageProp);
+          showWhatPage(pageProp.whatPage);
+          if(pageProp.whatPage == "blog") {
+            showProbList(pageProp.probLinks);
+          }
         }
-      } else {
-        pageProp = JSON.parse(pageProp);
-        showWhatPage(pageProp.whatPage);
-        if(pageProp.whatPage == "blog") {
-          showProbList(pageProp.probLinks);
-        }
-      }
+      });
     });
   });
-});
+}
 
 // print webpage
 button_print.onclick = function(element) {
@@ -66,8 +91,24 @@ button_print.onclick = function(element) {
       isBlogPage? './printTutorial.js' :
       'printUnsupported.js'
     );
+    // if modern mode, pass list of problems to be printed
+    if(isBlogPage == true && appMode == "modern") {
+      let param = { printList : getPrintList() };
+      chrome.tabs.executeScript(
+        tabs[0].id,
+        {code:"let printSettings = " + JSON.stringify(param) + ";"}
+      );
+    }
     chrome.tabs.executeScript(
         tabs[0].id,
         {file: fileToExec});
+    // modify to this (something like passing param)
+    /*
+    chrome.tabs.executeScript(tab.id, {
+      code: 'var config = 1;'
+    }, function() {
+        chrome.tabs.executeScript(tab.id, {file: 'content.js'});
+    });
+    */
   });
 };
