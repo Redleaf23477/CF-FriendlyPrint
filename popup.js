@@ -38,10 +38,14 @@ let appSettings = {
  * showWhatPage
  *   modify UI based on what kind of page the user is viewing
  * 
- * @param string whatPage - either "problem", "blog", or "something else"
+ * @param whatPage - if the webpage is fully loaded, either "problem", "blog", or "something else"
+ *   else type of whatPage is "undefined"
  * @return null
  */
 let showWhatPage = (whatPage) => {
+  // do nothing if the page is not fully load yet
+  if(typeof whatPage == "undefined") return;
+
   switch(whatPage) {
   case "problem":
     p_whatPage.innerText = "This is a " + whatPage + " page!";
