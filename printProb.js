@@ -1,5 +1,18 @@
-function printProbPage()
-{
+
+//////////////////////////////////////////////////////////////////////////////
+// Functions
+//////////////////////////////////////////////////////////////////////////////
+
+/*
+ * printProbPage
+ *   Remove dom elements that has nothing to do with problem contents and some
+ *   problem info so that most problem can fit in a single A4 paper.
+ *   Then, trigger browser's print webpage function
+ *   Finally, reload the webpage
+ * 
+ * @return null
+ */
+let printProbPage = () => {
     // header
     document.getElementById('header').remove();
     // menu box
@@ -19,6 +32,16 @@ function printProbPage()
     // print
     window.print();
     location.reload();
-    return true;
 }
+
+//////////////////////////////////////////////////////////////////////////////
+// Main script
+//////////////////////////////////////////////////////////////////////////////
+
+/*
+ * Variables injected from contentScript.js
+ * (Object) printSettings - parameters for printing
+ * (Object) appSettings - extension settings
+ */
+
 printProbPage();

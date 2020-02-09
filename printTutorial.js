@@ -1,6 +1,17 @@
 
-function printTutorial()
-{
+//////////////////////////////////////////////////////////////////////////////
+// Functions
+//////////////////////////////////////////////////////////////////////////////
+
+/*
+ * printTutorial
+ *   Remove dom elements that has nothing to do with blog contents.
+ *   Then, trigger browser's print webpage function
+ *   Finally, reload the webpage
+ * 
+ * @return null
+ */
+let printTutorial = () => {
   // header
   document.getElementById('header').remove();
   // menu box
@@ -18,10 +29,18 @@ function printTutorial()
   // print
   window.print();
   location.reload();
-  return true;
 }
 
-function removeUnwantedProblems(printList) {
+/*
+ * removeUnwantedProblems
+ *   If print blog page in "normal" mode, remove dom elements except for that 
+ * of the checked problems.
+ * 
+ * @param array printList - array of objects storing info of checked problems
+ *   ( { href: (string)problem  href, name: (string) problem name } )
+ * @return null
+ */
+let removeUnwantedProblems = (printList) => {
   let printListHrefs = [];
   printList.forEach((item) => { printListHrefs.push(item.href); });
   let div = document.querySelector(".ttypography").childNodes;
@@ -30,7 +49,7 @@ function removeUnwantedProblems(printList) {
   let isProbLink = (link) => {
     return link.search(/\/problem\//i) != -1;
   };
-  let currentProb = "NA"; // stores link of problem
+  let currentProb = "NA"; // stores href of problem
   for(let child of div) {
     if("querySelector" in child) {
       let a = child.querySelector("a");
@@ -44,15 +63,20 @@ function removeUnwantedProblems(printList) {
       trashCan.push(child);
     }
   }
-  console.log(printListHrefs);
-  console.log(trashCan);
   trashCan.forEach((node) => { node.remove(); });
 }
 
-// printSettings : declared by popup.js
-console.log(printSettings);
-if(appSettings.mode == "modern") {
-  console.log("Let's kill problems!!!")
+//////////////////////////////////////////////////////////////////////////////
+// Main script
+//////////////////////////////////////////////////////////////////////////////
+
+/*
+ * Variables injected from contentScript.js
+ * (Object) printSettings - parameters for printing
+ * (Object) appSettings - extension settings
+ */
+
+if(appSettings.mode == "normal") {
   removeUnwantedProblems(printSettings.printList);
 }
 printTutorial();
