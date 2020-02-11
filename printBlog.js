@@ -4,14 +4,14 @@
 //////////////////////////////////////////////////////////////////////////////
 
 /*
- * printTutorial
+ * printBlog
  *   Remove dom elements that has nothing to do with blog contents.
  *   Then, trigger browser's print webpage function
  *   Finally, reload the webpage
  * 
  * @return null
  */
-let printTutorial = () => {
+let printBlog = () => {
   // header
   document.getElementById('header').remove();
   // menu box
@@ -76,7 +76,7 @@ let removeUnwantedProblems = (printList) => {
  * (Object) appSettings - extension settings
  */
 
-if(appSettings.mode == "normal") {
+if(appSettings.mode == "normal" && printSettings.pageType == "tutorial") {
   removeUnwantedProblems(printSettings.printList);
 }
-printTutorial();
+printBlog();

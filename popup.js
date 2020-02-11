@@ -30,8 +30,8 @@ let appSettings = undefined;
  * showWhatPage
  *   modify UI based on what kind of page the user is viewing
  * 
- * @param whatPage - if the webpage is fully loaded, either "problem", "blog", or "something else"
- *   else type of whatPage is "undefined"
+ * @param whatPage - if the webpage is fully loaded, either "problem", "blog", "tutorial", or "something else",
+ *   otherwise type of whatPage is "undefined"
  * @return null
  */
 let showWhatPage = (whatPage) => {
@@ -46,6 +46,10 @@ let showWhatPage = (whatPage) => {
     p_whatPage.innerText = "This is a " + whatPage + " page!";
     button_print.hidden = false;
     break;
+    case "tutorial":
+      p_whatPage.innerText = "This is a " + whatPage + " page!";
+      button_print.hidden = false;
+      break;
   case "blog":
     p_whatPage.innerText = "This is a " + whatPage + " page!";
     button_print.hidden = false;
@@ -131,7 +135,7 @@ window.onload = (function () {
       } else {
         pageProp = JSON.parse(recv);
         showWhatPage(pageProp.whatPage);
-        if(appSettings.mode == "normal" && pageProp.whatPage == "blog") {
+        if(appSettings.mode == "normal" && pageProp.whatPage == "tutorial") {
           showProbList(pageProp.probLinks);
         }
       }
@@ -144,20 +148,23 @@ button_print.onclick = function(element) {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     // select script to be executed
     let isProblemPage = (pageProp.whatPage == "problem");
-    let isBlogPage = (pageProp.whatPage == "blog");
+    let isBlogPage = (pageProp.whatPage == "blog" || pageProp.whatPage == "tutorial");
     let fileToExec = (
       isProblemPage? './printProb.js' : 
-      isBlogPage? './printTutorial.js' :
+      isBlogPage? './printBlog.js' :
       'printUnsupported.js'
     );
     // if normal mode, pass list of problems to be printed
+    let param = undefined;
     if(appSettings.mode == "normal" && isBlogPage == true) {
-      let param = { printList : getPrintList() };
-      chrome.tabs.executeScript(
-        tabs[0].id,
-        {code:"let printSettings = " + JSON.stringify(param) + ";"}
-      );
+      param = { printList : getPrintList(), pageType : pageProp.whatPage };
+    } else if(appSettings.mode == "dummy") {
+      param = { pageType : pageProp.whatPage };
     }
+    chrome.tabs.executeScript(
+      tabs[0].id,
+      {code:"let printSettings = " + JSON.stringify(param) + ";"}
+    );
     // execute print script
     chrome.tabs.executeScript(
         tabs[0].id,
