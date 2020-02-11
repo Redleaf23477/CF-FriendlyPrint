@@ -20,6 +20,8 @@ let printBlog = () => {
   document.getElementsByClassName('second-level-menu')[0].remove();
   // sidebar
   document.getElementById('sidebar').remove();
+  // comment box
+  document.getElementsByClassName('new-comments-box')[0].remove();
   // pageContent
   document.getElementById('pageContent').className = "";
   document.getElementsByClassName('comments')[0].remove();

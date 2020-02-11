@@ -51,7 +51,7 @@ chrome.storage.sync.get("appMode", (data) => {
 // store setting when #sel_appMode onChange
 sel_appMode.addEventListener("change", () => {
   chrome.storage.sync.set({appMode: sel_appMode.value}, ()=>{
-    alert("appMode set to " + sel_appMode.value);
+    alert("App mode set to " + sel_appMode.value + ".  Reload codeforces web pages to see changes.");
   });
   appSettings.mode = sel_appMode.value;
   showModeIntro();

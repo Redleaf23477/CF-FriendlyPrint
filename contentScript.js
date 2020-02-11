@@ -44,8 +44,10 @@ let isRegularRoundTutorialPage = () => {
   let attachList = document.querySelectorAll("a.notice");
   let res = false;
   attachList.forEach((item) => {
-    let isRegularRoundLink = (href) => { return href.search("/contest/") != -1; };
-    if(isRegularRoundLink(item.href))
+    let isRegularRoundLink = (href, txt) => { 
+      return href.search("/contest/") != -1 && txt.search("Tutorial") != -1; 
+    };
+    if(isRegularRoundLink(item.href, item.parentNode.childNodes[0].textContent))
       res = true;
   });
   return res;
@@ -71,6 +73,12 @@ let fetchTutorialProblems = () => {
   });
 }
 
+/*
+ * markSpoilers
+ *   add sync callback between spoiler and checkbox when toggling spoiler
+ * 
+ * @return void
+ */
 let markSpoilers = () => {
   let div = document.querySelector(".ttypography").childNodes;
   let isProbLink = (link) => {
