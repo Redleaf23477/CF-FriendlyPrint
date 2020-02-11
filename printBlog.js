@@ -44,10 +44,9 @@ let removeUnwantedProblems = (printList) => {
   let printListHrefs = [];
   printList.forEach((item) => { printListHrefs.push(item.href); });
   let div = document.querySelector(".ttypography").childNodes;
-  console.log(div);
   let trashCan = [];
   let isProbLink = (link) => {
-    return link.search(/\/problem\//i) != -1;
+    return link.search("/problem/") != -1;
   };
   let currentProb = "NA"; // stores href of problem
   for(let child of div) {

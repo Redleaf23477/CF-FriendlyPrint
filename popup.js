@@ -92,6 +92,21 @@ let showProbList = (probDict) => {
 }
 
 /*
+ * checkProb
+ *   check the checkbox if the problem of it is in checkedList
+ * 
+ * @param array checkedList - array of hrefs
+ */
+let checkProb = (checkedList) => {
+  let cb = l_probList.querySelectorAll("input");
+  cb.forEach((item) => {
+    if(checkedList.indexOf(item.value) !== -1) {
+      item.checked = true;
+    }
+  });
+};
+
+/*
  * getPrintList
  *   get array of checked problems in the checkboxes
  * 
@@ -135,8 +150,10 @@ window.onload = (function () {
       } else {
         pageProp = JSON.parse(recv);
         showWhatPage(pageProp.whatPage);
+        console.log(pageProp);
         if(appSettings.mode == "normal" && pageProp.whatPage == "tutorial") {
           showProbList(pageProp.probLinks);
+          checkProb(pageProp.openedSpoilers);
         }
       }
     });
