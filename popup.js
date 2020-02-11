@@ -16,16 +16,10 @@ let pageProp = undefined;
 
 //////////////////////////////////////////////////////////////////////////////
 // Load values from chrome storage
-// 
-//    Note: Currently has nothing to load
 //////////////////////////////////////////////////////////////////////////////
-/*
-chrome.storage.sync.get('color', function(data) {
-  changeColor.style.backgroundColor = data.color;
-  changeColor.setAttribute('value', data.color);
-});
-*/
 
+// loading is placed in window.onload, 
+// so that settings is sured to be loaded when used
 let appSettings = undefined;
 
 //////////////////////////////////////////////////////////////////////////////

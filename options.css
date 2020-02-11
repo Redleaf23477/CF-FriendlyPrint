@@ -1,0 +1,11 @@
+.hidden_div {
+    display: none;
+}
+
+.show_div {
+    display: block;
+}
+
+.loading_element {
+    display: none;
+}

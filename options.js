@@ -16,10 +16,13 @@ let introDivs = document.querySelectorAll(".appMode_intro");
 
 let showModeIntro = () => {
   introDivs.forEach((item) => {
+    item.classList.remove("loading_element");
     if(item.id == appSettings.mode + "_intro") {
-      item.style = "display: block;";
+      item.classList.remove("hidden_div");
+      item.classList.add("show_div");
     } else {
-      item.style = "display: none;";
+      item.classList.remove("show_div");
+      item.classList.add("hidden_div");
     }
   });
 };
@@ -37,9 +40,8 @@ chrome.storage.sync.get("appMode", (data) => {
       opt.selected = true; break;
     }
   }
-  sel_appMode.style = "display: block;";
+  sel_appMode.classList.remove("loading_element");
   showModeIntro(); 
-  console.log(appSettings);
 });
 
 //////////////////////////////////////////////////////////////////////////////
