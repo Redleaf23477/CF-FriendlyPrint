@@ -1,12 +1,19 @@
   <!DOCTYPE html>
   <html style="width:500px;">
     <head>
-        <!-- nothing important -->
+       <link rel="stylesheet" href="popup.css">
     </head>
     <body>
-      <p id="whatPage">Loading... Reopen the extension when the webpage is fully loaded...</p>
+      <p id="whatPage">Loading... <br>Reopen the extension when the webpage is fully loaded...</p>
       <form id="probList"></form>
-      <button id="printButton" hidden=true>Print</button>
+      <div style="padding-top: 3px;">
+        <button id="printButton" hidden=true>Print</button>
+      </div>
+      <div class="gh">
+        <a href="https://github.com/Redleaf23477/CF-FriendlyPrint" target="_blank">
+          <img src="/images/GitHub-Mark-32px.png">
+        </a>
+      </div>
       <script src="popup.js"></script>
     </body>
   </html>
