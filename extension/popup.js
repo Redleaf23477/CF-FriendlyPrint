@@ -167,9 +167,9 @@ button_print.onclick = function(element) {
     let isProblemPage = (pageProp.whatPage == "problem");
     let isBlogPage = (pageProp.whatPage == "blog" || pageProp.whatPage == "tutorial");
     let fileToExec = (
-      isProblemPage? './printProb.js' : 
-      isBlogPage? './printBlog.js' :
-      'printUnsupported.js'
+      isProblemPage? '/friendlyPrint/printProb.js' : 
+      isBlogPage? '/friendlyPrint/printBlog.js' :
+      '/friendlyPrint/printUnsupported.js'
     );
     // if normal mode, pass list of problems to be printed
     let param = undefined;

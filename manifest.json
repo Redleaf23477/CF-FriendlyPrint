@@ -4,17 +4,17 @@
     "description": "Let's print Codeforces problems and tutorials!",
     "permissions": ["activeTab", "declarativeContent", "storage"],
     "background": {
-      "scripts": ["background.js"],
+      "scripts": ["/extension/background.js"],
       "persistent": false
     },
-    "options_page": "options.html",
+    "options_page": "/extension/options.html",
     "page_action": {
-      "default_popup": "popup.html"
+      "default_popup": "/extension/popup.html"
     },
     "content_scripts" : [
       {
         "matches" : ["https://codeforces.com/*"],
-        "js" : ["contentScript.js"]
+        "js" : ["/extension/contentScript.js"]
       }
     ],
     "manifest_version": 2
