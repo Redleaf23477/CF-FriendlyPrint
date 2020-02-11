@@ -1,5 +1,5 @@
   chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.set({version: '0.1'}, function() {
+    chrome.storage.sync.set({version: '0.1', appMode: 'normal'}, function() {
       console.log('This is the very experimental version of CF Friendly Print');
     });
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {

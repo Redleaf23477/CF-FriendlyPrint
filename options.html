@@ -1,20 +1,23 @@
   <!DOCTYPE html>
   <html>
     <head>
-      <style>
-        button {
-          height: 30px;
-          width: 30px;
-          outline: none;
-          margin: 10px;
-        }
-      </style>
+      <!-- nothing important -->
     </head>
     <body>
-      <div id="buttonDiv">
-      </div>
-      <div>
-        <p>Choose a different background color!</p>
+      <h1>Extension Options</h1>
+      <div id="appMode">
+        <h2>Choose app mode</h2>
+        <select id="sel_appMode" style="display: none;">
+          <option value="normal">normal mode</option>
+          <option value="dummy">dummy mode</option>
+        </select>
+        <div id="normal_intro" class="appMode_intro" style="display: none;">
+          <p>Normal mode provides an UI in extionsion popup so that user can choose which problems to print when viewing tutorial page.  It works well with most tutorials of codeforces usual rounds.</p>
+          <p>If users want to print codeforces blog pages other than usual round tutorials, please use dummy mode instead.  Normal mode do not support it currently.</p>
+        </div>
+        <div id="dummy_intro" class="appMode_intro" style="display: none;">
+          <p>Dummy mode simply deletes web elements like header, menu bars, side bars, footer, etc.  Users may need to delete other unwanted elements by themselves using something like chrome devtools(press F12 in to see it).</p>
+        </div>
       </div>
     </body>
     <script src="options.js"></script>

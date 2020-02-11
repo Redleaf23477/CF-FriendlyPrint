@@ -5,9 +5,11 @@
 //    Note: Currently has nothing to load
 //////////////////////////////////////////////////////////////////////////////
 
-let appSettings = {
-	mode: "normal"      // "dummy" for snapshot only, "normal" for better UI but maybe buggy
-};
+let appSettings = { mode: undefined };
+
+chrome.storage.sync.get("appMode", (data) => {
+  appSettings.mode = data.appMode;
+});
 
 //////////////////////////////////////////////////////////////////////////////
 // Main script

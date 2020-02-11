@@ -26,9 +26,7 @@ chrome.storage.sync.get('color', function(data) {
 });
 */
 
-let appSettings = {
-  mode: "normal"
-};
+let appSettings = undefined;
 
 //////////////////////////////////////////////////////////////////////////////
 // Functions
@@ -44,14 +42,19 @@ let appSettings = {
  */
 let showWhatPage = (whatPage) => {
   // do nothing if the page is not fully load yet
-  if(typeof whatPage == "undefined") return;
+  if(typeof whatPage == "undefined") {
+    button_print.hidden = true;
+    return;
+  }
 
   switch(whatPage) {
   case "problem":
     p_whatPage.innerText = "This is a " + whatPage + " page!";
+    button_print.hidden = false;
     break;
   case "blog":
     p_whatPage.innerText = "This is a " + whatPage + " page!";
+    button_print.hidden = false;
     break;
   case "something else":
     p_whatPage.innerText = "This page isn't supported to be printed QAQ";
@@ -117,6 +120,12 @@ let getPrintList = () => {
 
 // show popup UI
 window.onload = (function () {
+  if(typeof appSettings == "undefined") {
+    appSettings = { mode: undefined };
+    chrome.storage.sync.get("appMode", (data) => {
+      appSettings.mode = data.appMode;
+    });
+  }
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {type: "getPageProp"}, function(recv) {
       if(typeof recv == "undefined") {
