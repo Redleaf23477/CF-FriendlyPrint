@@ -26,6 +26,7 @@
     "content_scripts" : [
       {
         "matches" : ["https://codeforces.com/*"],
+        "run_at": "document_idle",
         "js" : ["/extension/contentScript.js"]
       }
     ],
