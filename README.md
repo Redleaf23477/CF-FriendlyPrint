@@ -5,7 +5,7 @@ Compatible with most problems, tutorials and blog entries on codeforces.
 
 ## How to Use
 
-Friendly-print is only supported on codeforces problem set problems (problems in gym is not supported), tutorials (tutorials of regular codeforces round only), and blog entries.
+Friendly-print is only supported on codeforces problem set problems (problems in gym are not supported), tutorials (tutorials of regular codeforces rounds only), and blog entries.
 
 ### Problem Pages
 
@@ -31,7 +31,11 @@ For tutorials that uses spoilers (toggling buttons to show tutorials), simply to
 
 ![image-20200211234012329](README.assets/image-20200211234012329.png)
 
+Furthermore, it turns out to work well with most tutorial pages!
 
+![image-20200213161647996](README.assets/image-20200213161647996.png)
+
+![image-20200213161702264](README.assets/image-20200213161702264.png)
 
 ### Blog Pages
 
@@ -47,7 +51,7 @@ The above mentioned are demonstrated under **normal** mode.  In option page of t
 
 Dummy mode simply removes header, top menu, side bar, footer, and stuffs that have nothing to do with the content of the problem or blog entry and print the web page afterwards.  Users can use chrome dev-tools (press `<F12>` in chrome) and remove elements they don't wish to see by themselves.
 
-Since there isn't unified format on tutorials, normal mode may end up deleting wrong elements in the page or some unexpected error.  If normal mode failed to fetch correct contents, you can always use dummy mode and delete the unwanted elements on you own.
+In most pages, normal mode is simply enough.  However, since there isn't unified format on tutorials, normal mode may end up deleting wrong elements in the page or encounter some unexpected errors.  If normal mode failed to fetch correct contents, you can always use dummy mode and delete the unwanted elements on you own.
 
 ## FAQ
 
@@ -55,11 +59,11 @@ Since there isn't unified format on tutorials, normal mode may end up deleting w
 
 A: The function of printing tutorial is still experimental.  Since there isn't an unified format on tutorials and blog entries, it is challenging to come up with an algorithm to fetch selected problems from the web page.  
 
-It is suggested to use dummy mode and deleted unwanted DOM elements by yourselves using something like chrome devTools (press `<F12>` in chrome to see it).
+In this case, it is suggested to use dummy mode and deleted unwanted DOM elements by yourselves using something like chrome devTools (press `<F12>` in chrome to see it).
 
 ## Contact
 
-If you have any question or suggestion about the extension, feel free to contact me through email:
+If you have any question about the extension, feel free to contact me through email.  Feedbacks, comments, suggestions are very welcome!
 
 Author: @redleaf23477
 
