@@ -1,13 +1,16 @@
 
 //////////////////////////////////////////////////////////////////////////////
-// Load values from chrome storage
+// Variables
 //////////////////////////////////////////////////////////////////////////////
 
 let appSettings = { mode: undefined };
 
-chrome.storage.sync.get("appMode", (data) => {
-  appSettings.mode = data.appMode;
-});
+let pageProp = {
+  "complete": false,
+	"whatPage": undefined,
+  "probLinks": undefined,
+  "openedSpoilers": []
+};
 
 //////////////////////////////////////////////////////////////////////////////
 // Functions
@@ -129,36 +132,50 @@ let markSpoilers = () => {
   }
 }
 
+/*
+ * fetchTutorialPageInfo
+ *   if all tutorials are loaded, fetch list of tutorial problems and mark spoilers
+ * 
+ * @return boolean - true if success, false if some tutorials are not loaded yet
+ */
+let fetchTutorialPageInfo = () => {
+  // if it is a tutorial page, fetch list of problems when webpage is ready
+  if(!document.querySelector(".problemTutorial")) {
+    fetchTutorialProblems();
+    markSpoilers();
+    return true;
+  } else {
+    return false;
+  }
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // Main script
 //////////////////////////////////////////////////////////////////////////////
 
-let pageProp = {
-	"whatPage": undefined,
-  "probLinks": undefined,
-  "openedSpoilers": []
-};
+// get extension settings from chrome.storage and fetch page info
+chrome.storage.sync.get("appMode", (data) => {
+  appSettings.mode = data.appMode;
 
-// init everything when the page is fully loaded
-window.addEventListener('load', () => {
-	// init pageProp.whatPage - whether it is problem, blog(probably tutorial), 
+  // init pageProp.whatPage - whether it is problem, blog(probably tutorial), 
   // or something else
-	pageProp.whatPage = (
-	  isProblemPage()? "problem" :
+  pageProp.whatPage = (
+    isProblemPage()? "problem" :
     isRegularRoundTutorialPage()? "tutorial" : 
     isBlogPage()? "blog" : 
     "something else"
-	);
+  );
 
-	// init pageProp.probLinks - fetch list of problem in blog page so that user 
-	// can choose problems to print in normal mode
-	if (appSettings.mode == "normal") {
-			if (pageProp.whatPage == "tutorial") {
-        // if it is a tutorial page, fetch list of problems when webpage is ready
-        fetchTutorialProblems();
-        markSpoilers();
-      }
-	}
+  // init pageProp.probLinks - fetch list of problem in blog page so that user 
+  // can choose problems to print in normal mode
+  if (appSettings.mode == "normal" && pageProp.whatPage == "tutorial") {
+    if(fetchTutorialPageInfo()) {
+      pageProp.complete = true;
+    }
+  } else {
+    pageProp.complete = true;
+  }
+
 });
 
 // sending message to popup.js on request
@@ -166,6 +183,11 @@ chrome.runtime.onMessage.addListener(
 	function (message, sender, sendResponse) {
 		switch (message.type) {
 			case "getPageProp":
+        if(!pageProp.complete) {
+          if(fetchTutorialPageInfo()) {
+            pageProp.complete = true;
+          }
+        }
 				sendResponse(JSON.stringify(pageProp));
 				break;
 			default:

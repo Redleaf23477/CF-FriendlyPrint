@@ -149,11 +149,12 @@ window.onload = (function () {
         }
       } else {
         pageProp = JSON.parse(recv);
-        showWhatPage(pageProp.whatPage);
-        console.log(pageProp);
-        if(appSettings.mode == "normal" && pageProp.whatPage == "tutorial") {
-          showProbList(pageProp.probLinks);
-          checkProb(pageProp.openedSpoilers);
+        if(pageProp.complete) {
+          showWhatPage(pageProp.whatPage);
+          if(appSettings.mode == "normal" && pageProp.whatPage == "tutorial") {
+            showProbList(pageProp.probLinks);
+            checkProb(pageProp.openedSpoilers);
+          }
         }
       }
     });

@@ -9,11 +9,24 @@
     },
     "options_page": "/extension/options.html",
     "page_action": {
-      "default_popup": "/extension/popup.html"
+      "default_popup": "/extension/popup.html",
+      "default_icon": {
+        "16": "images/logo16.png",
+        "32": "images/logo32.png",
+        "64": "images/logo64.png",
+        "128": "images/logo128.png"
+      }
+    },
+    "icons": {
+      "16": "images/logo16.png",
+      "32": "images/logo32.png",
+      "64": "images/logo64.png",
+      "128": "images/logo128.png"
     },
     "content_scripts" : [
       {
         "matches" : ["https://codeforces.com/*"],
+        "run_at": "document_idle",
         "js" : ["/extension/contentScript.js"]
       }
     ],

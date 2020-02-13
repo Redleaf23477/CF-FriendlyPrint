@@ -20,6 +20,8 @@ let printProbPage = () => {
     document.getElementsByClassName('second-level-menu')[0].remove();
     // sidebar
     document.getElementById('sidebar').remove();
+    // alerts
+    for(item of document.getElementsByClassName('alert')) item.remove();
     // pageContent
     document.getElementById('pageContent').className = "";
     document.getElementsByClassName('time-limit')[0].remove();
