@@ -3,6 +3,16 @@ A chrome extension supporting friendly-print on [codeforces](https://codeforces.
 
 Compatible with most problems, tutorials and blog entries on codeforces.
 
+## Installation
+
+1. Download and extract the extension from the [release page](https://github.com/Redleaf23477/CF-FriendlyPrint/releases/tag/v0.1.0).
+2. Go to `chrome://extensions` in chrome (simply type it in the address bar).
+3. Turn on developer mode. Then press "Load unpacked" button.
+4. Select the extracted folder(name of the folder should be `CF-FriendlyPrint-0.1.0` by default).
+5. You've finished installing the extension!
+
+(I found a [blog](https://webkul.com/blog/how-to-install-the-unpacked-extension-in-chrome/) that explains how to install extensions in detail and with pictures. Hope it helps!)
+
 ## How to Use
 
 Friendly-print is only supported on codeforces problem set problems (problems in gym are not supported), tutorials (tutorials of regular codeforces rounds only), and blog entries.
@@ -54,6 +64,10 @@ Dummy mode simply removes header, top menu, side bar, footer, and stuffs that ha
 In most pages, normal mode is simply enough.  However, since there isn't unified format on tutorials, normal mode may end up deleting wrong elements in the page or encounter some unexpected errors.  If normal mode failed to fetch correct contents, you can always use dummy mode and delete the unwanted elements on you own.
 
 ## FAQ
+
+**Q: Why am I getting `Loading... Reopen the extension when the webpage is fully loaded...` in the popup?**
+
+A: The extension will start functioning after the web page is fully loaded (including loading tutorials), before that the message will be shown in the extension pop-up.  Simply dismissing the pop-up then reopening the extension after the page is loaded will solve the problem.
 
 **Q: The extension acts weird occasionally in tutorial pages?**
 
